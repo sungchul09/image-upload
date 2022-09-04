@@ -23,8 +23,7 @@ const PORT = 5001
 
 app.use("/uploads", express.static('uploads'))
 
-app.post('/upload', upload.single('imageTest'), (req, res) => {
-  console.log(req.file)
+app.post('/upload', upload.single('image'), (req, res) => {
   res.json(req.file)
 })
  
