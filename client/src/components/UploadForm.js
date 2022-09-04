@@ -7,6 +7,7 @@
  const UploadForm = () => {
     const defaultFileName = '이미지 파일을 업로드 해주세요.'
     const [file, setFile] = useState(null)
+    const [imgSrc, setImgSrc] = useState(null)
     const [fileName, setFileName] = useState(defaultFileName)
     const [percent, setPercent] = useState(0)
 
@@ -14,6 +15,9 @@
       const imageFile = event.target.files[0]
       setFile(imageFile)
       setFileName(imageFile.name)
+      const fileReader = new FileReader()
+      fileReader.readAsDataURL(imageFile)
+      fileReader.onload = (e) => setImgSrc(e.target.result)
     }
 
     const onSubmit = async (e) => {
@@ -31,20 +35,23 @@
         setTimeout(() => {
           setPercent(0)
           setFileName(defaultFileName)
+          setImgSrc(null)
         }, 3000)
       } catch(err) {
         toast.error(err.message)
-        setFileName(defaultFileName)
         setPercent(0)
+        setFileName(defaultFileName)
+        setImgSrc(null)
       }
     }
 
     return (
       <form onSubmit={onSubmit}>
+        <img src={imgSrc} className={`image-preview ${imgSrc && "image-preview-show"}`} />
         <ProgressBar percent={percent} />
         <div className="file-dropper">
           <label htmlFor="image">{fileName}</label>
-          <input id="image" type="file" onChange={imageSelectHandler}/>
+          <input id="image" type="file" accept="image/jpeg, image/png" onChange={imageSelectHandler}/>
         </div>
         <button type="submit">제출</button>
       </form>
