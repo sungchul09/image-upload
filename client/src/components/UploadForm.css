@@ -31,4 +31,15 @@ button {
   transition: 0.5s;
 }
 
+.image-preview {
+  width: 0%;
+  opacity: 1;
+  display: block;
+  margin: 0 auto 20px auto;
+  border-radius: 10px;
+}
 
+.image-preview-show {
+  width: 75%;
+  transition: 0.5s;
+}
